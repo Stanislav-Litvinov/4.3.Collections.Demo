@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 public class IssueManager {
 
     IssueRepository repository;
-    private List<Issue> items = new ArrayList<>();
+    private final List<Issue> items = new ArrayList<>();
 
     public IssueManager(IssueRepository repository) {
         this.repository = repository;
@@ -17,34 +17,41 @@ public class IssueManager {
 
     public List<Issue> issueIsOpen() {
         List<Issue> issues = new ArrayList<>();
-        for (Issue item : items)
+        for (Issue item : repository.findAll()) {
             if (item.isOpen()) {
                 issues.add(item);
             }
+        }
         return issues;
+
     }
 
     public List<Issue> issueIsClosed() {
         List<Issue> issues = new ArrayList<>();
-        for (Issue item : items)
+        for (Issue item : repository.findAll()) {
             if (!item.isOpen()) {
                 issues.add(item);
             }
+        }
         return issues;
     }
 
-    public void openById(int id) {
-        for (Issue item : items)
+    public boolean openById(int id) {
+        for (Issue item : items) {
             if (item.getId() == id && !item.isOpen()) {
                 item.setOpen(true);
             }
+        }
+        return true;
     }
 
-    public void closeById(int id) {
-        for (Issue item : items)
+    public boolean closeById(int id) {
+        for (Issue item : repository.findAll()) {
             if (item.getId() == id && item.isOpen()) {
                 item.setOpen(false);
             }
+        }
+        return true;
     }
 
     public Collection<Issue> findAuthor(String text) {
