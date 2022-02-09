@@ -32,6 +32,14 @@ class IssueRepositoryTest {
     }
 
     @Test
+    public void shouldFindAll() {
+        List<Issue> expected = List.of( issue2, issue3, issue4, issue5, issue6);
+        Collection<Issue> actual = repo.findAll();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void shouldRemove() {
         repo.remove(issue1);
         List<Issue> expected = List.of(issue2, issue3, issue4, issue5, issue6);
@@ -40,11 +48,4 @@ class IssueRepositoryTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldFindAll() {
-        List<Issue> expected = List.of(issue1, issue2, issue3, issue4, issue5, issue6);
-        Collection<Issue> actual = repo.findAll();
-
-        assertEquals(expected, actual);
-    }
 }
